@@ -159,6 +159,3 @@ Simple mandi price tracking application.
 
 ---
 
-**Version**: 1.0  
-**Last Updated**: March 2026  
-**Status**: Basic Implementation
