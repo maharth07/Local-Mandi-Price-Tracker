@@ -1,161 +1,72 @@
-# 🛒 Mandi Price Checker
+# Mandi Price Checker
 
-A simple GUI application to check vegetable prices from local mandis (farmer markets). Built with Python and Tkinter for easy price tracking.
+A simple desktop application to check vegetable prices from the mandi (market) using a graphical user interface.
 
-## 📋 Features
+## Features
 
-- **Vegetable Selection**: Choose from a dropdown list of common vegetables
-- **Dynamic List Management**: Add and remove vegetables from your tracking list
-- **Price Checking**: Get simulated price information for selected items
-- **Non-Blocking UI**: Uses threading to keep the interface responsive
-- **Simple Interface**: Clean and straightforward design
+- **Check Prices**: Look up real-time prices for vegetables per kilogram
+- **Add Items**: Dynamically add new vegetables to the price list
+- **Remove Items**: Remove vegetables from the list
+- **Clean UI**: User-friendly interface built with Tkinter
+- **Async Processing**: Non-blocking price fetching with threading
 
-## 🚀 Installation
+## Requirements
 
-### Prerequisites
-- Python 3.6 or higher
-- Tkinter (comes pre-installed with Python)
+- Python 3.x
+- tkinter (usually included with Python)
 
-### Required Libraries
+## Installation
 
-Install the required dependencies:
+1. Clone or download this repository
+2. Ensure Python 3.x is installed on your system
+3. No additional dependencies required (tkinter is built-in)
 
-```bash
-pip install tk
-```
+## Usage
 
-*Note: Tkinter usually comes with Python by default. If you get import errors, install it using your system's package manager.*
-
-## 💻 Usage
-
-### Running the Application
-
+1. Run the application:
 ```bash
 python app.py
 ```
 
-### How to Use
+2. **Check Price**:
+   - Select a vegetable from the dropdown or type a name
+   - Click "Check Price" button
+   - Wait for the mandi rate to appear
 
-1. **Select a Vegetable**: Use the dropdown to choose from available options (Potato, Onion, Tomato)
-2. **Add New Items**: Type a vegetable name and click "Add" to include it in the list
-3. **Remove Items**: Select an item and click "Remove" to delete it from the list
-4. **Check Price**: Click "Check Price" to get the current price information
-5. **View Results**: The price will be displayed below the button
+3. **Add Item**:
+   - Type a new vegetable name in the text field
+   - Click "Add Item" button
+   - The item will be added to the dropdown list
 
-### Example Workflow
+4. **Remove Item**:
+   - Select the vegetable you want to remove
+   - Click "Remove Item" button
+   - The item will be removed from the list
 
-```
-1. Launch the app
-2. Select "Potato" from dropdown
-3. Click "Check Price"
-4. See result: "Potato price is ₹25.30 per kg"
-5. Type "Carrot" in the dropdown
-6. Click "Add" to add it to the list
-7. Select "Carrot" and check its price
-```
+## Default Items
 
-## 🏗️ Code Structure
+- Potato
+- Onion
+- Tomato
 
-### Global Variables
-- `root`: Main Tkinter window
-- `veg_list`: List of available vegetables (dynamically updated)
+## Application Structure
 
-### Functions
+The app is built around the `MandiPriceApp` class which handles:
+- **UI Setup**: Creating buttons, dropdowns, and labels
+- **Item Management**: Adding and removing vegetables
+- **Price Fetching**: Simulating API calls and displaying results
+- **Threading**: Preventing UI freezing during price lookup
 
-| Function | Purpose |
-|----------|---------|
-| `add_item()` | Adds a new vegetable to the veg_list |
-| `remove_item()` | Removes a vegetable from the veg_list |
-| `get_price()` | Initiates price checking in a background thread |
-| `process(item)` | Simulates price fetching (runs in background) |
-| `show_result(text)` | Updates the UI with price results |
+## How It Works
 
-### UI Components
+- Prices are randomly generated between ₹15 to ₹40 per kg (simulated data)
+- The app includes a 1.5-second delay to simulate actual network calls
+- Threading ensures the UI remains responsive during price fetching
 
-| Component | Type | Purpose |
-|-----------|------|---------|
-| `label` | Label | App title |
-| `combo` | Combobox | Vegetable selection dropdown |
-| `add_btn` | Button | Add new vegetable |
-| `remove_btn` | Button | Remove vegetable |
-| `btn` | Button | Check price |
-| `result_label` | Label | Display price results |
+## Future Enhancements
 
-## ⚙️ Configuration
-
-### Default Vegetables
-
-The app starts with these vegetables:
-```python
-veg_list = ["Potato", "Onion", "Tomato"]
-```
-
-### Price Simulation
-
-Prices are currently simulated using:
-```python
-price = random.randint(1500, 4000) / 100  # ₹15.00 - ₹40.00 per kg
-```
-
-### Window Settings
-
-```python
-root.geometry("400x350")  # Window size
-root.title("Mandi Price App")  # Window title
-```
-
-## 🔮 Future Enhancements
-
-- [ ] Connect to real mandi price APIs
-- [ ] Save price history
-- [ ] Export data to CSV
-- [ ] Price trend analysis
-- [ ] Location-based pricing
-- [ ] Price alerts
-
-## 🛠️ Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| Tkinter import error | Install tkinter: `pip install tk` or use system package manager |
-| App won't start | Ensure Python 3.6+ is installed |
-| Buttons not working | Check if all functions are defined before UI creation |
-| Threading issues | Make sure `threading` module is imported |
-
-## 📝 Example Output
-
-**Success Case:**
-```
-Potato price is ₹28.50 per kg
-```
-
-**No Data Case:**
-```
-No data found
-```
-
-**Error Messages:**
-- "Enter something" - When trying to add empty item
-- "Already exists" - When adding duplicate vegetable
-- "Not found" - When trying to remove non-existent item
-- "Select item" - When checking price without selection
-
-## 📦 Dependencies
-
-| Package | Purpose | Installation |
-|---------|---------|--------------|
-| `tkinter` | GUI framework | Pre-installed with Python |
-| `random` | Price simulation | Built-in |
-| `time` | Delays | Built-in |
-| `threading` | Background processing | Built-in |
-
-## 📄 License
-
-This project is open-source and available for personal use.
-
-## 👨‍💻 Author
-
-Simple mandi price tracking application.
-
----
-
+- Integration with real mandi API for live prices
+- Display price history and trends
+- Filter by region/mandi location
+- Save favorite vegetables
+- Price comparison across different mandis
