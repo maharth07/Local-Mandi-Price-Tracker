@@ -1,41 +1,30 @@
-# 🛒 Local Mandi Price Tracker
+# 🛒 Mandi Price Checker
 
-A simple and intuitive GUI application to check hyper-local vegetable prices in real-time. Perfect for consumers who want to know fair market prices before visiting local mandis (farmer markets).
+A simple GUI application to check vegetable prices from local mandis (farmer markets). Built with Python and Tkinter for easy price tracking.
 
 ## 📋 Features
 
-- **Live Price Checking**: Search for vegetable prices with a single click
-- **Dynamic Item Management**: Add and remove vegetables from the tracking list
-- **User-Friendly Interface**: Clean, modern Tkinter GUI with intuitive controls
-- **Real-Time Updates**: Get timestamps for when prices were last updated
-- **Non-Blocking UI**: Uses threading to keep the interface responsive during price fetches
-- **Pre-Loaded Suggestions**: Comes with common vegetables (Potato, Onion, Tomato, etc.)
-- **Keyboard Support**: Press Enter to quickly search for prices
+- **Vegetable Selection**: Choose from a dropdown list of common vegetables
+- **Dynamic List Management**: Add and remove vegetables from your tracking list
+- **Price Checking**: Get simulated price information for selected items
+- **Non-Blocking UI**: Uses threading to keep the interface responsive
+- **Simple Interface**: Clean and straightforward design
 
 ## 🚀 Installation
 
 ### Prerequisites
-- Python 3.7 or higher
-- Windows, macOS, or Linux
+- Python 3.6 or higher
+- Tkinter (comes pre-installed with Python)
 
 ### Required Libraries
 
-Install the required dependencies using pip:
+Install the required dependencies:
 
 ```bash
-pip install requests beautifulsoup4
+pip install tk
 ```
 
-If you're using a virtual environment:
-
-```bash
-python -m venv venv
-venv\Scripts\activate  # On Windows
-# OR
-source venv/bin/activate  # On macOS/Linux
-
-pip install requests beautifulsoup4
-```
+*Note: Tkinter usually comes with Python by default. If you get import errors, install it using your system's package manager.*
 
 ## 💻 Usage
 
@@ -45,144 +34,131 @@ pip install requests beautifulsoup4
 python app.py
 ```
 
-Once the app launches:
+### How to Use
 
-1. **Select or Type a Vegetable**: Use the dropdown combobox to select from the suggested list or type a custom vegetable name
-2. **Add New Items**: Click the `+` button to add custom vegetables to your tracking list
-3. **Remove Items**: Click the `-` button to remove vegetables you're no longer tracking
-4. **Check Prices**: Click the "Check Price" button (or press Enter) to fetch the latest price
-5. **View Results**: The price will display below with a timestamp
+1. **Select a Vegetable**: Use the dropdown to choose from available options (Potato, Onion, Tomato)
+2. **Add New Items**: Type a vegetable name and click "Add" to include it in the list
+3. **Remove Items**: Select an item and click "Remove" to delete it from the list
+4. **Check Price**: Click "Check Price" to get the current price information
+5. **View Results**: The price will be displayed below the button
 
 ### Example Workflow
 
 ```
-1. Open the app
-2. Select "Tomato" from dropdown (or type "Broccoli")
-3. Click "+" to add "Broccoli" to your list
-4. Change selection to "Broccoli"
-5. Click "Check Price"
-6. View result: "✅ Success! Broccoli: ₹25.50 per kg (Updated: 3:45 PM)"
+1. Launch the app
+2. Select "Potato" from dropdown
+3. Click "Check Price"
+4. See result: "Potato price is ₹25.30 per kg"
+5. Type "Carrot" in the dropdown
+6. Click "Add" to add it to the list
+7. Select "Carrot" and check its price
 ```
 
 ## 🏗️ Code Structure
 
-### Class: `MandiTrackerApp`
+### Global Variables
+- `root`: Main Tkinter window
+- `veg_list`: List of available vegetables (dynamically updated)
 
-The main application class that manages the GUI and price tracking logic.
+### Functions
 
-#### **Attributes:**
-- `root`: The main Tkinter window
-- `item_var`: StringVar holding the currently selected/typed item
-- `item_combo`: Dropdown combobox for vegetable selection
-- `suggested_items`: List of vegetables to track (dynamically updated)
-- `result_lbl`: Label to display price results
-- `search_btn`: Button to trigger price search
+| Function | Purpose |
+|----------|---------|
+| `add_item()` | Adds a new vegetable to the veg_list |
+| `remove_item()` | Removes a vegetable from the veg_list |
+| `get_price()` | Initiates price checking in a background thread |
+| `process(item)` | Simulates price fetching (runs in background) |
+| `show_result(text)` | Updates the UI with price results |
 
-#### **Key Methods:**
+### UI Components
 
-| Method | Purpose |
-|--------|---------|
-| `__init__(root)` | Initializes the GUI with all UI elements and styling |
-| `add_item()` | Adds a new vegetable to the tracking list |
-| `remove_item()` | Removes a vegetable from the tracking list |
-| `start_scraping_thread()` | Creates a background thread to fetch prices |
-| `scrape_price(item_name)` | Fetches price data for the selected item |
-| `update_ui_with_result(text, color)` | Updates the display with price results |
-
-## 🎨 UI Components
-
-- **Header**: "🛒 Hyper-Local Price Checker"
-- **Subtitle**: Instructional text
-- **Input Frame**: Contains combobox + Add/Remove buttons
-- **Search Button**: Green button to fetch prices
-- **Result Label**: Displays prices, errors, or status messages
-- **Color Scheme**: Professional blue/green/red accent colors
+| Component | Type | Purpose |
+|-----------|------|---------|
+| `label` | Label | App title |
+| `combo` | Combobox | Vegetable selection dropdown |
+| `add_btn` | Button | Add new vegetable |
+| `remove_btn` | Button | Remove vegetable |
+| `btn` | Button | Check price |
+| `result_label` | Label | Display price results |
 
 ## ⚙️ Configuration
 
-You can customize the app by modifying these sections in `app.py`:
+### Default Vegetables
 
+The app starts with these vegetables:
 ```python
-# Change the default market URL (future implementation)
-MARKET_URL = "https://your-market-api.com"
-
-# Modify default vegetables
-self.suggested_items = ["Potato", "Onion", "Tomato", ...]
-
-# Adjust window size
-self.root.geometry("450x380")
-
-# Change color scheme
-bg="#f4f6f9"  # Background color
-fg="#2c3e50"  # Text color
+veg_list = ["Potato", "Onion", "Tomato"]
 ```
 
-## 🔮 Current Limitations & Future Enhancements
+### Price Simulation
 
-### Current State:
-- **Price Data**: Currently simulates prices with random values (₹1500-₹4000 per 100 units)
-- **No Real API**: Doesn't connect to a live market price API yet
+Prices are currently simulated using:
+```python
+price = random.randint(1500, 4000) / 100  # ₹15.00 - ₹40.00 per kg
+```
 
-### Planned Features:
+### Window Settings
+
+```python
+root.geometry("400x350")  # Window size
+root.title("Mandi Price App")  # Window title
+```
+
+## 🔮 Future Enhancements
+
 - [ ] Connect to real mandi price APIs
-- [ ] Save price history and display trends
-- [ ] Location-based price tracking
+- [ ] Save price history
 - [ ] Export data to CSV
-- [ ] Price alerts and notifications
-- [ ] Dark mode support
-- [ ] Mobile app version
+- [ ] Price trend analysis
+- [ ] Location-based pricing
+- [ ] Price alerts
 
 ## 🛠️ Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
-| Import errors | Run `pip install requests beautifulsoup4` |
-| GUI doesn't appear | Ensure tkinter is installed (comes with Python by default) |
-| App is slow | Check your internet connection |
-| Prices not updating | Verify the market URL is accessible |
+| Tkinter import error | Install tkinter: `pip install tk` or use system package manager |
+| App won't start | Ensure Python 3.6+ is installed |
+| Buttons not working | Check if all functions are defined before UI creation |
+| Threading issues | Make sure `threading` module is imported |
 
 ## 📝 Example Output
 
 **Success Case:**
 ```
-✅ Success!
-
-Potato: ₹18.50 per kg
-(Updated: 3:45 PM)
+Potato price is ₹28.50 per kg
 ```
 
-**Error Case:**
+**No Data Case:**
 ```
-❌ Not Found.
-
-Could not find prices for 'Carrot' today.
+No data found
 ```
 
-**Connection Error:**
-```
-⚠️ Connection Error.
-Make sure you are connected to the internet.
-```
+**Error Messages:**
+- "Enter something" - When trying to add empty item
+- "Already exists" - When adding duplicate vegetable
+- "Not found" - When trying to remove non-existent item
+- "Select item" - When checking price without selection
 
-## 📦 Dependencies Breakdown
+## 📦 Dependencies
 
-| Package | Purpose | Version |
-|---------|---------|---------|
-| `tkinter` | GUI framework (built-in) | - |
-| `requests` | HTTP requests for API calls | Latest |
-| `beautifulsoup4` | Web scraping (for future use) | Latest |
-| `threading` | Non-blocking operations (built-in) | - |
-| `datetime` | Timestamp generation (built-in) | - |
+| Package | Purpose | Installation |
+|---------|---------|--------------|
+| `tkinter` | GUI framework | Pre-installed with Python |
+| `random` | Price simulation | Built-in |
+| `time` | Delays | Built-in |
+| `threading` | Background processing | Built-in |
 
 ## 📄 License
 
-This project is open-source and available for personal and commercial use.
+This project is open-source and available for personal use.
 
-## 👨‍💻 Author & Support
+## 👨‍💻 Author
 
-For bugs, feature requests, or questions, feel free to reach out!
+Simple mandi price tracking application.
 
 ---
 
+**Version**: 1.0  
 **Last Updated**: March 2026  
-**Status**: Active Development
+**Status**: Basic Implementation
